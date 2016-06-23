@@ -1,20 +1,24 @@
 import cvfy
 
-app = cvfy.register('gh:107.170.77.168:60819434:3000:8000')
+app = cvfy.register('gh:107.170.77.168:61805212:3000:8002')
 
 @cvfy.crossdomain
 @app.listen()
-def concat():
+def getsize():
         
     ## receiving the data
     alltext = cvfy.getTextArray()
+    allimages = cvfy.getImageArray()
     
-    ## processing the data
-    joined_and_uppercase = (alltext[0] + ' ' + alltext[1]).upper()
-    and_then_reversed = joined_and_uppercase[::-1]
+    ## get size of both images
+    size1 = str(len(allimages[0].read()))
+    size2 = str(len(allimages[1].read()))
     
     ## sending back the data
-    cvfy.sendTextArray([joined_and_uppercase, and_then_reversed])
-    return 'OK'
+    data1 = alltext[0] + ' ' + size1 + ' bytes'
+    data2 = alltext[1] + ' ' + size2 + ' bytes'
+    cvfy.sendTextArray([data1, data2])
+
+    return "Ok"
         
 app.run()
